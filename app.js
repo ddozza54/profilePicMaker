@@ -23,3 +23,12 @@ context.lineTo(600, 400);
 context.lineTo(400, 400);
 context.fillStyle = 'blue';
 context.fill();
+
+context.beginPath();
+context.arc(100, 400, 50, Math.PI, 2 * Math.PI);
+context.fillStyle = 'gold';
+context.fill();
+
+context.beginPath();
+context.arc(100, 600, 50, 0, 2 * Math.PI);
+context.fill();
