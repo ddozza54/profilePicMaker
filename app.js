@@ -3,44 +3,37 @@ const context = canvas.getContext('2d');
 
 canvas.width = 800;
 canvas.height = 800;
+context.lineWidth = 2;
 
-context.fillStyle = 'green';
-
-context.fillRect(10, 10, 150, 200);
-
-const colors = [
-  '#D6A2E8',
-  '#F8EFBA',
-  '#FEA47F',
-  '#BDC581',
-  '#ffeaa7',
-  '#a29bfe',
-  '#e17055',
-];
+let isPainting = false;
 
 const onMouseMove = (event) => {
   console.log(event.offsetX, event.offsetY);
-  context.beginPath();
-  context.moveTo(0, 0);
-  context.lineTo(event.offsetX, event.offsetY);
-  let randomcolor =
-    colors[Math.ceil(Math.random() * colors.length)];
-  context.strokeStyle = randomcolor;
-  context.stroke();
+  if (isPainting) {
+    context.lineTo(event.offsetX, event.offsetY);
+    context.stroke();
+  }
+  context.moveTo(event.offsetX, event.offsetY);
+};
+
+const startPainting = (event) => {
+  console.log('눌렀다!', event.offsetX, event.offsetY);
+  isPainting = true;
+};
+
+const cancelPainting = () => {
+  isPainting = false;
 };
 
 canvas.addEventListener('mousemove', onMouseMove);
+canvas.addEventListener('mousedown', startPainting);
+canvas.addEventListener('mouseup', cancelPainting);
+canvas.addEventListener('mouseleave', cancelPainting);
 
-// 클릭하면 라인이 그려지는 캔버스 만들기
-// 1. 클릭한 이벤트를 이벤트 리스너를 통해 감지
-// 2. 클릭한 곳의 좌표를 구한다.
-// 2-1. 캔버스 내에서의 좌표를 추적하는 법? 캔버스의 위치를 변수로 만든 후 전체 화면에서 빼기?
-//=> 이벤트 리스너를 console.log 해 어떤 정보가 들어있는지 확인해볼 수 있다.
-// 우리는 캔버스와 관련된 데이터를 찾으면 됨. offsetX, offsetY
-
-// 3. 클릭시, beginPath() 함수로 기존의 라인을 끊어냄,
-// 4. 시작점은 설정하지 않거나 => 그럼 라인이 안그려짐. , moveTo를 (0,0) 으로 고정
-// 5. lineTo()로 받아온 위치를 넣어줌.
-// 6. context.stoke() 로 선을 만들어줌.
-
-//7. 클릭하면 그려지게 하는 것 대신, 마우스를 움직이면 알아서 그려지게 하려면, mouseMove 를 이벤트로 사용한다.
+/** 마우스가 누른 채 그림 그려지는 것 만들어보기
+ *  1. 마우스가 클릭되는 이벤트를 받는다
+ * 2. 마우스가 클릭되는 이벤트가 감지되면 -> line Begine(), moveTo() 로 시작점을 해당 위치에 준다
+ * => moveTo 로 먼저 붓을 마우스가 현재 있는 곳에 위치시켜준다.
+ * 3. 마우스가 움직이면 -> LineTo() 로 움직인 곳 까지 stoke 를 준다.
+ *
+ */
