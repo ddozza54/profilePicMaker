@@ -2,6 +2,8 @@ const canvas = document.querySelector('canvas');
 const lineWidth = document.getElementById('line-width');
 const color = document.getElementById('color');
 const fileInput = document.getElementById('file');
+const chinButton = document.getElementById('chin_button');
+const gramButton = document.getElementById('gram_button');
 const context = canvas.getContext('2d');
 
 const CANVAS_WIDTH = 800;
@@ -57,6 +59,34 @@ const onFileChange = (event) => {
   };
 };
 
+const onChinBtnClick = () => {
+  const image = new Image();
+  image.src = '../assets/character/chin.PNG';
+  image.onload = function () {
+    context.drawImage(
+      image,
+      0,
+      0,
+      CANVAS_WIDTH,
+      CANVAS_HEIGHT
+    );
+  };
+};
+
+const onLaptopBtnClick = () => {
+  const image = new Image();
+  image.src = '../assets/laptop/gram.PNG';
+  image.onload = function () {
+    context.drawImage(
+      image,
+      0,
+      0,
+      CANVAS_WIDTH,
+      CANVAS_HEIGHT
+    );
+  };
+};
+
 canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mouseup', cancelPainting);
@@ -64,3 +94,6 @@ canvas.addEventListener('mouseleave', cancelPainting);
 lineWidth.addEventListener('change', onLineWidthChange);
 color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
+
+chinButton.addEventListener('click', onChinBtnClick);
+gramButton.addEventListener('click', onLaptopBtnClick);

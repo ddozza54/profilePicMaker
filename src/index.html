@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Porile Pic Maker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas></canvas>
+    <div>
+      <input
+        type="range"
+        id="line-width"
+        min="1"
+        max="10"
+        value="5"
+        step="0.5"
+      />
+      <input type="color" id="color" />
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        id="file"
+      />
+    </div>
+    <h4>Character</h4>
+    <div>
+      <button id="chin_button">
+        <img
+          id="chin_img"
+          src="../assets/character/chin.PNG"
+        />
+      </button>
+      <button id="gram_button">
+        <img
+          id="gram_img"
+          src="../assets/laptop/gram.PNG"
+        />
+      </button>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
