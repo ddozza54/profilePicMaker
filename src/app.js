@@ -4,10 +4,16 @@ const color = document.getElementById('color');
 const fileInput = document.getElementById('file');
 const chinButton = document.getElementById('chin_button');
 const gramButton = document.getElementById('gram_button');
+const fillingWayButton = document.getElementById(
+  'filling_way_button'
+);
+
 const context = canvas.getContext('2d');
 
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
+
+let isFilling = false;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
@@ -87,13 +93,36 @@ const onLaptopBtnClick = () => {
   };
 };
 
+const onFillingWayBtnClick = () => {
+  console.log('클릭');
+  if (isFilling) {
+    isFilling = false;
+    fillingWayButton.innerText = '🖌️';
+    console.log(isFilling);
+  } else {
+    isFilling = true;
+    fillingWayButton.innerText = '🪣';
+    console.log(isFilling);
+  }
+};
+
+const onCanvasClick = () => {
+  context.beginPath();
+  context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+};
+
 canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mouseup', cancelPainting);
 canvas.addEventListener('mouseleave', cancelPainting);
+canvas.addEventListener('click', onCanvasClick);
 lineWidth.addEventListener('change', onLineWidthChange);
 color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
 
 chinButton.addEventListener('click', onChinBtnClick);
 gramButton.addEventListener('click', onLaptopBtnClick);
+fillingWayButton.addEventListener(
+  'click',
+  onFillingWayBtnClick
+);
