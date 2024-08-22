@@ -14,6 +14,7 @@ const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 
 let isFilling = false;
+let isChinOnCanvas = false;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
@@ -66,17 +67,27 @@ const onFileChange = (event) => {
 };
 
 const onChinBtnClick = () => {
-  const image = new Image();
-  image.src = '../assets/character/chin.PNG';
-  image.onload = function () {
-    context.drawImage(
-      image,
-      0,
-      0,
-      CANVAS_WIDTH,
-      CANVAS_HEIGHT
-    );
-  };
+  if (!isChinOnCanvas) {
+    const image = new Image();
+    image.src = '../assets/character/chin.PNG';
+    image.onload = function () {
+      context.drawImage(
+        image,
+        0,
+        0,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+      );
+    };
+    isChinOnCanvas = true;
+    chinButton.style.backgroundColor = 'tomato';
+  } else {
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    isChinOnCanvas = false;
+    chinButton.style.backgroundColor = 'white';
+  }
 };
 
 const onLaptopBtnClick = () => {
