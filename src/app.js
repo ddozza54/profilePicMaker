@@ -3,15 +3,18 @@ const lineWidth = document.getElementById('line-width');
 const color = document.getElementById('color');
 const fileInput = document.getElementById('file');
 const chinButton = document.getElementById('chin_button');
-const gramButton = document.getElementById('gram_button');
+const quokkaButton =
+  document.getElementById('quokka_button');
+const laptopButton =
+  document.getElementsByClassName('laptop_button');
 const fillingWayButton = document.getElementById(
   'filling_way_button'
 );
 
 const context = canvas.getContext('2d');
 
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 500;
 
 let isFilling = false;
 let isChinOnCanvas = false;
@@ -69,7 +72,7 @@ const onFileChange = (event) => {
 const onChinBtnClick = () => {
   if (!isChinOnCanvas) {
     const image = new Image();
-    image.src = '../assets/character/chin.PNG';
+    image.src = '../assets/character/chinchilla.PNG';
     image.onload = function () {
       context.drawImage(
         image,
@@ -92,7 +95,7 @@ const onChinBtnClick = () => {
 
 const onLaptopBtnClick = () => {
   const image = new Image();
-  image.src = '../assets/laptop/gram.PNG';
+  image.src = '../assets/laptop/laptop_1';
   image.onload = function () {
     context.drawImage(
       image,
@@ -132,7 +135,7 @@ color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
 
 chinButton.addEventListener('click', onChinBtnClick);
-gramButton.addEventListener('click', onLaptopBtnClick);
+laptopButton.addEventListener('click', onLaptopBtnClick);
 fillingWayButton.addEventListener(
   'click',
   onFillingWayBtnClick

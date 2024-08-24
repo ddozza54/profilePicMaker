@@ -1,10 +1,10 @@
 body {
-  background-color: gold;
+  background-color: #f9f3d2;
 }
 
 canvas {
-  width: 800px;
-  height: 800px;
+  width: 500px;
+  height: 500px;
   border: 5px solid black;
   background-color: white;
 }
@@ -14,6 +14,6 @@ button:hover {
 }
 
 button > img {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
 }
