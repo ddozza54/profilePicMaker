@@ -5,8 +5,15 @@ const fileInput = document.getElementById('file');
 const chinButton = document.getElementById('chin_button');
 const quokkaButton =
   document.getElementById('quokka_button');
-const laptopButton =
-  document.getElementsByClassName('laptop_button');
+const rabbitButton =
+  document.getElementById('rabbit_button');
+const bearButton = document.getElementById('bear_button');
+const laptop1Button = document.getElementById(
+  'laptop1_button'
+);
+const laptop2Button = document.getElementById(
+  'laptop2_button'
+);
 const fillingWayButton = document.getElementById(
   'filling_way_button'
 );
@@ -17,7 +24,8 @@ const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
 
 let isFilling = false;
-let isChinOnCanvas = false;
+let isCharacterOnCanvas = false;
+let isLaptopOnCanvas = false;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
@@ -69,10 +77,20 @@ const onFileChange = (event) => {
   };
 };
 
-const onChinBtnClick = () => {
-  if (!isChinOnCanvas) {
+const onCharacterBtnClick = (event) => {
+  let parentButton = event.target.parentNode;
+  let buttonClass = event.target.className;
+  if (isCharacterOnCanvas === false) {
     const image = new Image();
-    image.src = '../assets/character/chinchilla.PNG';
+    if (buttonClass === 'chin_button') {
+      image.src = '../assets/character/chinchilla.PNG';
+    } else if (buttonClass === 'quokka_button') {
+      image.src = '../assets/character/quokka.PNG';
+    } else if (buttonClass === 'rabbit_button') {
+      image.src = '../assets/character/rabbit.PNG';
+    } else if (buttonClass === 'bear_button') {
+      image.src = '../assets/character/bear.PNG';
+    }
     image.onload = function () {
       context.drawImage(
         image,
@@ -82,29 +100,45 @@ const onChinBtnClick = () => {
         CANVAS_HEIGHT
       );
     };
-    isChinOnCanvas = true;
-    chinButton.style.backgroundColor = 'tomato';
-  } else {
+    isCharacterOnCanvas = true;
+    parentButton.style.border = '#a3cec4 2px solid';
+  } else if (isCharacterOnCanvas === true) {
     context.beginPath();
     context.fillStyle = 'white';
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    isChinOnCanvas = false;
-    chinButton.style.backgroundColor = 'white';
+    parentButton.style.border = '#f9d194 1px solid';
+    isCharacterOnCanvas = false;
   }
 };
 
-const onLaptopBtnClick = () => {
-  const image = new Image();
-  image.src = '../assets/laptop/laptop_1';
-  image.onload = function () {
-    context.drawImage(
-      image,
-      0,
-      0,
-      CANVAS_WIDTH,
-      CANVAS_HEIGHT
-    );
-  };
+const onLaptopBtnClick = (event) => {
+  let parentButton = event.target.parentNode;
+  let buttonClass = event.target.className;
+  if (isLaptopOnCanvas === false) {
+    const image = new Image();
+    if (buttonClass === 'laptop1_button') {
+      image.src = '../assets/laptop/laptop_1.PNG';
+    } else if (buttonClass === 'laptop2_button') {
+      image.src = '../assets/laptop/laptop_2.PNG';
+    }
+    image.onload = function () {
+      context.drawImage(
+        image,
+        0,
+        0,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+      );
+    };
+    isLaptopOnCanvas = true;
+    parentButton.style.border = '#a3cec4 2px solid';
+  } else if (isLaptopOnCanvas === true) {
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    parentButton.style.border = '#f9d194 1px solid';
+    isLaptopOnCanvas = false;
+  }
 };
 
 const onFillingWayBtnClick = () => {
@@ -134,8 +168,14 @@ lineWidth.addEventListener('change', onLineWidthChange);
 color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
 
-chinButton.addEventListener('click', onChinBtnClick);
-laptopButton.addEventListener('click', onLaptopBtnClick);
+chinButton.addEventListener('click', onCharacterBtnClick);
+quokkaButton.addEventListener('click', onCharacterBtnClick);
+rabbitButton.addEventListener('click', onCharacterBtnClick);
+bearButton.addEventListener('click', onCharacterBtnClick);
+
+laptop1Button.addEventListener('click', onLaptopBtnClick);
+laptop2Button.addEventListener('click', onLaptopBtnClick);
+
 fillingWayButton.addEventListener(
   'click',
   onFillingWayBtnClick
