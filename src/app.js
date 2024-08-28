@@ -91,7 +91,6 @@ const onCharacterBtnClick = (event) => {
     } else if (buttonClass === 'bear_button') {
       image.src = '../assets/character/bear.PNG';
     }
-    image.onload = function () {
       context.drawImage(
         image,
         0,
@@ -99,7 +98,6 @@ const onCharacterBtnClick = (event) => {
         CANVAS_WIDTH,
         CANVAS_HEIGHT
       );
-    };
     isCharacterOnCanvas = true;
     parentButton.style.border = '#a3cec4 2px solid';
   } else if (isCharacterOnCanvas === true) {
@@ -121,15 +119,13 @@ const onLaptopBtnClick = (event) => {
     } else if (buttonClass === 'laptop2_button') {
       image.src = '../assets/laptop/laptop_2.PNG';
     }
-    image.onload = function () {
-      context.drawImage(
-        image,
-        0,
-        0,
-        CANVAS_WIDTH,
-        CANVAS_HEIGHT
-      );
-    };
+    context.drawImage(
+      image,
+      0,
+      0,
+      CANVAS_WIDTH,
+      CANVAS_HEIGHT
+    );
     isLaptopOnCanvas = true;
     parentButton.style.border = '#a3cec4 2px solid';
   } else if (isLaptopOnCanvas === true) {
