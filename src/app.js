@@ -17,6 +17,7 @@ const laptop2Button = document.getElementById(
 const fillingWayButton = document.getElementById(
   'filling_way_button'
 );
+const saveButton = document.getElementById('save_button');
 
 const context = canvas.getContext('2d');
 
@@ -91,13 +92,13 @@ const onCharacterBtnClick = (event) => {
     } else if (buttonClass === 'bear_button') {
       image.src = '../assets/character/bear.PNG';
     }
-      context.drawImage(
-        image,
-        0,
-        0,
-        CANVAS_WIDTH,
-        CANVAS_HEIGHT
-      );
+    context.drawImage(
+      image,
+      0,
+      0,
+      CANVAS_WIDTH,
+      CANVAS_HEIGHT
+    );
     isCharacterOnCanvas = true;
     parentButton.style.border = '#a3cec4 2px solid';
   } else if (isCharacterOnCanvas === true) {
@@ -155,6 +156,15 @@ const onCanvasClick = () => {
   context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 };
 
+const onSaveButtonClick = () => {
+  const image = canvas.toDataURL();
+  const link = document.createElement('a');
+  link.href = image;
+  link.download = 'ProfileByDDOZZA';
+  link.click();
+  alert('save!');
+};
+
 canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mouseup', cancelPainting);
@@ -163,6 +173,7 @@ canvas.addEventListener('click', onCanvasClick);
 lineWidth.addEventListener('change', onLineWidthChange);
 color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
+saveButton.addEventListener('click', onSaveButtonClick);
 
 chinButton.addEventListener('click', onCharacterBtnClick);
 quokkaButton.addEventListener('click', onCharacterBtnClick);

@@ -156,3 +156,8 @@ button > img {
   height: 100px;
   border: #f9d194 1px solid;
 }
+
+#save_button {
+  padding: 5px;
+  border: #93db8e 2px solid;
+}
