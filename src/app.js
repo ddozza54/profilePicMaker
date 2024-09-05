@@ -31,6 +31,8 @@ let isLaptopOnCanvas = false;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
+context.fillStyle = 'white';
+context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
 let isPainting = false;
 
@@ -157,7 +159,7 @@ const onCanvasClick = () => {
 };
 
 const onSaveButtonClick = () => {
-  const image = canvas.toDataURL();
+  const image = canvas.toDataURL('image/jpeg');
   const link = document.createElement('a');
   link.href = image;
   link.download = 'ProfileByDDOZZA';
