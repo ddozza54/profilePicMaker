@@ -26,7 +26,6 @@ const CANVAS_HEIGHT = 500;
 
 let isFilling = false;
 let isCharacterOnCanvas = false;
-let classNameOfCharacter = '';
 let isLaptopOnCanvas = false;
 
 canvas.width = CANVAS_WIDTH;
@@ -95,72 +94,46 @@ const findingImgSrc = (className) => {
   }
 };
 
-const onCharacterBtnClick = (event) => {
-  console.log(classNameOfCharacter);
-  let parentButton = event.target.parentNode;
-  let buttonClass = event.target.className;
-  if (isCharacterOnCanvas === false) {
-    //캐릭터가 캔버스에 없는 경우
-    const image = new Image();
-    classNameOfCharacter = buttonClass;
-    image.src = findingImgSrc(buttonClass);
-    context.drawImage(
-      image,
-      0,
-      0,
-      CANVAS_WIDTH,
-      CANVAS_HEIGHT
-    );
-    isCharacterOnCanvas = true;
-    parentButton.style.border = '#a3cec4 2px solid';
-  } else if (isCharacterOnCanvas === true) {
-    // 캐릭터가 이미 캔버스에 있는 경우
-    context.beginPath();
-    //클릭한 캐릭터와 캔버스 위에 있는 캐릭터가 같은 경우
-    if (classNameOfCharacter === buttonClass) {
-      context.fillStyle = 'white';
-      context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      parentButton.style.border = '#f9d194 1px solid';
-      isCharacterOnCanvas = false;
-    } else {
-      //그려진 캐릭터와 다른 캐릭터 버튼을 눌렀을 경우
+const drawImage = (buttonClass) => {
+  const image = new Image();
+  image.src = findingImgSrc(buttonClass);
+  context.drawImage(
+    image,
+    0,
+    0,
+    CANVAS_WIDTH,
+    CANVAS_HEIGHT
+  );
+};
 
-      const image = new Image();
-      image.src = findingImgSrc(buttonClass);
-      context.drawImage(
-        image,
-        0,
-        0,
-        CANVAS_WIDTH,
-        CANVAS_HEIGHT
-      );
-      isCharacterOnCanvas = true;
-      parentButton.style.border = '#a3cec4 2px solid';
-    }
+// 같은 카테고리 내에 있는 것들만 서로 대치 되도록, 카테고리가 다르면 대치 되지 않도록
+const onCharacterBtnClick = (event) => {
+  let buttonClass = event.target.className;
+  //캐릭터가 캔버스에 없는 경우 -> 추후 기본 이미지가 세팅된 버전으로 변경
+  if (!isCharacterOnCanvas) {
+    drawImage(buttonClass);
+    isCharacterOnCanvas = true;
+  } else if (isCharacterOnCanvas) {
+    // 캐릭터가 이미 캔버스에 있는 경우 - 초기화 후 그려주기
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    drawImage(buttonClass);
+    isCharacterOnCanvas = true;
   }
 };
 
 const onLaptopBtnClick = (event) => {
-  let parentButton = event.target.parentNode;
   let buttonClass = event.target.className;
-  if (isLaptopOnCanvas === false) {
-    const image = new Image();
-    image.src = findingImgSrc(buttonClass);
-    context.drawImage(
-      image,
-      0,
-      0,
-      CANVAS_WIDTH,
-      CANVAS_HEIGHT
-    );
+  if (!isLaptopOnCanvas) {
+    drawImage(buttonClass);
     isLaptopOnCanvas = true;
-    parentButton.style.border = '#a3cec4 2px solid';
-  } else if (isLaptopOnCanvas === true) {
+  } else if (isLaptopOnCanvas) {
     context.beginPath();
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    parentButton.style.border = '#f9d194 1px solid';
-    isLaptopOnCanvas = false;
+    // context.fillStyle = 'white';
+    // context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    drawImage(buttonClass);
+    isLaptopOnCanvas = true;
   }
 };
 
