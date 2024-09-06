@@ -26,13 +26,12 @@ const CANVAS_HEIGHT = 500;
 
 let isFilling = false;
 let isCharacterOnCanvas = false;
+let classNameOfCharacter = '';
 let isLaptopOnCanvas = false;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
-context.fillStyle = 'white';
-context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
 let isPainting = false;
 
@@ -80,20 +79,31 @@ const onFileChange = (event) => {
   };
 };
 
+const findingImgSrc = (className) => {
+  if (className === 'chin_button') {
+    return '../assets/character/chinchilla.PNG';
+  } else if (className === 'quokka_button') {
+    return '../assets/character/quokka.PNG';
+  } else if (className === 'rabbit_button') {
+    return '../assets/character/rabbit.PNG';
+  } else if (className === 'bear_button') {
+    return '../assets/character/bear.PNG';
+  } else if (className === 'laptop1_button') {
+    return '../assets/laptop/laptop_1.PNG';
+  } else if (className === 'laptop2_button') {
+    return '../assets/laptop/laptop_2.PNG';
+  }
+};
+
 const onCharacterBtnClick = (event) => {
+  console.log(classNameOfCharacter);
   let parentButton = event.target.parentNode;
   let buttonClass = event.target.className;
   if (isCharacterOnCanvas === false) {
+    //캐릭터가 캔버스에 없는 경우
     const image = new Image();
-    if (buttonClass === 'chin_button') {
-      image.src = '../assets/character/chinchilla.PNG';
-    } else if (buttonClass === 'quokka_button') {
-      image.src = '../assets/character/quokka.PNG';
-    } else if (buttonClass === 'rabbit_button') {
-      image.src = '../assets/character/rabbit.PNG';
-    } else if (buttonClass === 'bear_button') {
-      image.src = '../assets/character/bear.PNG';
-    }
+    classNameOfCharacter = buttonClass;
+    image.src = findingImgSrc(buttonClass);
     context.drawImage(
       image,
       0,
@@ -104,11 +114,29 @@ const onCharacterBtnClick = (event) => {
     isCharacterOnCanvas = true;
     parentButton.style.border = '#a3cec4 2px solid';
   } else if (isCharacterOnCanvas === true) {
+    // 캐릭터가 이미 캔버스에 있는 경우
     context.beginPath();
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    parentButton.style.border = '#f9d194 1px solid';
-    isCharacterOnCanvas = false;
+    //클릭한 캐릭터와 캔버스 위에 있는 캐릭터가 같은 경우
+    if (classNameOfCharacter === buttonClass) {
+      context.fillStyle = 'white';
+      context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      parentButton.style.border = '#f9d194 1px solid';
+      isCharacterOnCanvas = false;
+    } else {
+      //그려진 캐릭터와 다른 캐릭터 버튼을 눌렀을 경우
+
+      const image = new Image();
+      image.src = findingImgSrc(buttonClass);
+      context.drawImage(
+        image,
+        0,
+        0,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+      );
+      isCharacterOnCanvas = true;
+      parentButton.style.border = '#a3cec4 2px solid';
+    }
   }
 };
 
@@ -117,11 +145,7 @@ const onLaptopBtnClick = (event) => {
   let buttonClass = event.target.className;
   if (isLaptopOnCanvas === false) {
     const image = new Image();
-    if (buttonClass === 'laptop1_button') {
-      image.src = '../assets/laptop/laptop_1.PNG';
-    } else if (buttonClass === 'laptop2_button') {
-      image.src = '../assets/laptop/laptop_2.PNG';
-    }
+    image.src = findingImgSrc(buttonClass);
     context.drawImage(
       image,
       0,
@@ -141,21 +165,20 @@ const onLaptopBtnClick = (event) => {
 };
 
 const onFillingWayBtnClick = () => {
-  console.log('클릭');
   if (isFilling) {
     isFilling = false;
     fillingWayButton.innerText = '🖌️';
-    console.log(isFilling);
   } else {
     isFilling = true;
     fillingWayButton.innerText = '🪣';
-    console.log(isFilling);
   }
 };
 
 const onCanvasClick = () => {
-  context.beginPath();
-  context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  if (isFilling) {
+    context.beginPath();
+    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  }
 };
 
 const onSaveButtonClick = () => {
@@ -172,6 +195,7 @@ canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mouseup', cancelPainting);
 canvas.addEventListener('mouseleave', cancelPainting);
 canvas.addEventListener('click', onCanvasClick);
+
 lineWidth.addEventListener('change', onLineWidthChange);
 color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
