@@ -8,6 +8,9 @@ const quokkaButton =
 const rabbitButton =
   document.getElementById('rabbit_button');
 const bearButton = document.getElementById('bear_button');
+const desk1Button = document.getElementById('desk1_button');
+const desk2Button = document.getElementById('desk2_button');
+const desk3Button = document.getElementById('desk3_button');
 const laptop1Button = document.getElementById(
   'laptop1_button'
 );
@@ -24,15 +27,15 @@ const context = canvas.getContext('2d');
 const CANVAS_WIDTH = 500;
 const CANVAS_HEIGHT = 500;
 
-let isFilling = false;
-let isCharacterOnCanvas = false;
-let isLaptopOnCanvas = false;
-
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
 
 let isPainting = false;
+let isFilling = false;
+let isCharacterOnCanvas = false;
+let isLaptopOnCanvas = false;
+let isDeskOnCanvas = false;
 
 const onMouseMove = (event) => {
   if (isPainting) {
@@ -91,6 +94,12 @@ const findingImgSrc = (className) => {
     return '../assets/laptop/laptop_1.PNG';
   } else if (className === 'laptop2_button') {
     return '../assets/laptop/laptop_2.PNG';
+  } else if (className === 'desk1_button') {
+    return '../assets/desk/desk_1.PNG';
+  } else if (className === 'desk2_button') {
+    return '../assets/desk/desk_2.PNG';
+  } else if (className === 'desk3_button') {
+    return '../assets/desk/desk_3.PNG';
   }
 };
 
@@ -123,18 +132,19 @@ const onCharacterBtnClick = (event) => {
   }
 };
 
+const onDeskBtnclick = (event) => {
+  let buttonClass = event.target.className;
+  console.log(buttonClass);
+  context.beginPath();
+  drawImage(buttonClass);
+  isDeskOnCanvas = true;
+};
+
 const onLaptopBtnClick = (event) => {
   let buttonClass = event.target.className;
-  if (!isLaptopOnCanvas) {
-    drawImage(buttonClass);
-    isLaptopOnCanvas = true;
-  } else if (isLaptopOnCanvas) {
-    context.beginPath();
-    // context.fillStyle = 'white';
-    // context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    drawImage(buttonClass);
-    isLaptopOnCanvas = true;
-  }
+  context.beginPath();
+  drawImage(buttonClass);
+  isLaptopOnCanvas = true;
 };
 
 const onFillingWayBtnClick = () => {
@@ -178,6 +188,10 @@ chinButton.addEventListener('click', onCharacterBtnClick);
 quokkaButton.addEventListener('click', onCharacterBtnClick);
 rabbitButton.addEventListener('click', onCharacterBtnClick);
 bearButton.addEventListener('click', onCharacterBtnClick);
+
+desk1Button.addEventListener('click', onDeskBtnclick);
+desk2Button.addEventListener('click', onDeskBtnclick);
+desk3Button.addEventListener('click', onDeskBtnclick);
 
 laptop1Button.addEventListener('click', onLaptopBtnClick);
 laptop2Button.addEventListener('click', onLaptopBtnClick);
