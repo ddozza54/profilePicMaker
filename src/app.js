@@ -34,8 +34,6 @@ context.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
 let isCharacterOnCanvas = false;
-let isLaptopOnCanvas = false;
-let isDeskOnCanvas = false;
 
 const onMouseMove = (event) => {
   if (isPainting) {
@@ -132,19 +130,10 @@ const onCharacterBtnClick = (event) => {
   }
 };
 
-const onDeskBtnclick = (event) => {
-  let buttonClass = event.target.className;
-  console.log(buttonClass);
-  context.beginPath();
-  drawImage(buttonClass);
-  isDeskOnCanvas = true;
-};
-
-const onLaptopBtnClick = (event) => {
+const fixedItemButtonClick = (event) => {
   let buttonClass = event.target.className;
   context.beginPath();
   drawImage(buttonClass);
-  isLaptopOnCanvas = true;
 };
 
 const onFillingWayBtnClick = () => {
@@ -161,6 +150,7 @@ const onCanvasClick = () => {
   if (isFilling) {
     context.beginPath();
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    isCharacterOnCanvas = false;
   }
 };
 
@@ -189,12 +179,18 @@ quokkaButton.addEventListener('click', onCharacterBtnClick);
 rabbitButton.addEventListener('click', onCharacterBtnClick);
 bearButton.addEventListener('click', onCharacterBtnClick);
 
-desk1Button.addEventListener('click', onDeskBtnclick);
-desk2Button.addEventListener('click', onDeskBtnclick);
-desk3Button.addEventListener('click', onDeskBtnclick);
+desk1Button.addEventListener('click', fixedItemButtonClick);
+desk2Button.addEventListener('click', fixedItemButtonClick);
+desk3Button.addEventListener('click', fixedItemButtonClick);
 
-laptop1Button.addEventListener('click', onLaptopBtnClick);
-laptop2Button.addEventListener('click', onLaptopBtnClick);
+laptop1Button.addEventListener(
+  'click',
+  fixedItemButtonClick
+);
+laptop2Button.addEventListener(
+  'click',
+  fixedItemButtonClick
+);
 
 fillingWayButton.addEventListener(
   'click',
