@@ -21,6 +21,9 @@ const fillingWayButton = document.getElementById(
   'filling_way_button'
 );
 const saveButton = document.getElementById('save_button');
+const saveNotification = document.getElementById(
+  'save_notification_container'
+);
 
 const context = canvas.getContext('2d');
 
@@ -160,7 +163,10 @@ const onSaveButtonClick = () => {
   link.href = image;
   link.download = 'ProfileByDDOZZA';
   link.click();
-  alert('save!');
+  saveNotification.classList.add('show');
+  setTimeout(() => {
+    saveNotification.classList.remove('show');
+  }, 2000);
 };
 
 canvas.addEventListener('mousemove', onMouseMove);

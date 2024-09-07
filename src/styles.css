@@ -161,3 +161,28 @@ button > img {
   padding: 5px;
   border: #93db8e 2px solid;
 }
+
+.save_notification_container {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #93db8e;
+  position: absolute;
+  top: 1rem;
+  opacity: 0;
+}
+
+.show {
+  animation: opacity 2s ease-in-out;
+}
+
+@keyframes opacity {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
