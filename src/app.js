@@ -34,12 +34,56 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
 
-let fixedItemArray = [];
-let backgroundColor = 'whtie';
-
 let isPainting = false;
 let isFilling = false;
-let isCharacterOnCanvas = false;
+
+let fixedItemArray = [];
+let backgroundColor = '';
+const profileItems = {
+  character: 'character_quokka_button',
+  desk: 'desk3_button',
+  laptop: 'laptop1_button',
+};
+
+const findingImgSrc = (className) => {
+  if (className === 'character_chin_button') {
+    return '../assets/character/chinchilla.PNG';
+  } else if (className === 'character_quokka_button') {
+    return '../assets/character/quokka.PNG';
+  } else if (className === 'character_rabbit_button') {
+    return '../assets/character/rabbit.PNG';
+  } else if (className === 'character_bear_button') {
+    return '../assets/character/bear.PNG';
+  } else if (className === 'laptop1_button') {
+    return '../assets/laptop/laptop_1.PNG';
+  } else if (className === 'laptop2_button') {
+    return '../assets/laptop/laptop_2.PNG';
+  } else if (className === 'desk1_button') {
+    return '../assets/desk/desk_1.PNG';
+  } else if (className === 'desk2_button') {
+    return '../assets/desk/desk_2.PNG';
+  } else if (className === 'desk3_button') {
+    return '../assets/desk/desk_3.PNG';
+  }
+};
+
+const drawImage = (targetClassName) => {
+  const image = new Image();
+  image.src = findingImgSrc(targetClassName);
+  context.drawImage(
+    image,
+    0,
+    0,
+    CANVAS_WIDTH,
+    CANVAS_HEIGHT
+  );
+};
+
+const drawOrderedItems = () => {
+  Object.values(profileItems).map((item) =>
+    drawImage(item)
+  );
+};
 
 const onMouseMove = (event) => {
   if (isPainting) {
@@ -68,7 +112,6 @@ const onColorChange = (event) => {
   context.strokeStyle = pickColor;
   context.fillStyle = pickColor;
   backgroundColor = pickColor;
-  console.log(backgroundColor);
 };
 
 const onFileChange = (event) => {
@@ -88,75 +131,21 @@ const onFileChange = (event) => {
   };
 };
 
-const findingImgSrc = (className) => {
-  if (className === 'chin_button') {
-    return '../assets/character/chinchilla.PNG';
-  } else if (className === 'quokka_button') {
-    return '../assets/character/quokka.PNG';
-  } else if (className === 'rabbit_button') {
-    return '../assets/character/rabbit.PNG';
-  } else if (className === 'bear_button') {
-    return '../assets/character/bear.PNG';
-  } else if (className === 'laptop1_button') {
-    return '../assets/laptop/laptop_1.PNG';
-  } else if (className === 'laptop2_button') {
-    return '../assets/laptop/laptop_2.PNG';
-  } else if (className === 'desk1_button') {
-    return '../assets/desk/desk_1.PNG';
-  } else if (className === 'desk2_button') {
-    return '../assets/desk/desk_2.PNG';
-  } else if (className === 'desk3_button') {
-    return '../assets/desk/desk_3.PNG';
-  }
-};
-
-const drawImage = (buttonClass) => {
-  const image = new Image();
-  image.src = findingImgSrc(buttonClass);
-  context.drawImage(
-    image,
-    0,
-    0,
-    CANVAS_WIDTH,
-    CANVAS_HEIGHT
-  );
-};
-
-// 같은 카테고리 내에 있는 것들만 서로 대치 되도록, 카테고리가 다르면 대치 되지 않도록
-const onCharacterBtnClick = (event) => {
+const changeProfileItems = (event) => {
   let buttonClass = event.target.className;
-  //캐릭터가 캔버스에 없는 경우 -> 추후 기본 이미지가 세팅된 버전으로 변경
-  if (!isCharacterOnCanvas) {
-    drawImage(buttonClass);
-    isCharacterOnCanvas = true;
-  } else if (isCharacterOnCanvas) {
-    // 캐릭터가 이미 캔버스에 있는 경우 - 초기화 후 그려주기
-    context.beginPath();
-    context.fillStyle = backgroundColor;
-    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    drawImage(buttonClass);
-    fixedItemArray.map((item) => drawImage(item));
-    isCharacterOnCanvas = true;
+  if (buttonClass.includes('character')) {
+    profileItems['character'] = buttonClass;
   }
-};
-
-const fixedItemButtonClick = (event) => {
-  let buttonClass = event.target.className;
-  //같은 카테고리는 삭제해준 후 넣어주기
   if (buttonClass.includes('desk')) {
-    fixedItemArray = fixedItemArray.filter(
-      (item) => !item.includes('desk')
-    );
-    fixedItemArray.push(buttonClass);
+    profileItems['desk'] = buttonClass;
   }
   if (buttonClass.includes('laptop')) {
-    fixedItemArray = fixedItemArray.filter(
-      (item) => !item.includes('laptop')
-    );
-    fixedItemArray.push(buttonClass);
+    profileItems['laptop'] = buttonClass;
   }
   context.beginPath();
-  fixedItemArray.sort().map((item) => drawImage(item));
+  context.fillStyle = backgroundColor || 'white';
+  context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  drawOrderedItems();
 };
 
 const onFillingWayBtnClick = () => {
@@ -173,7 +162,7 @@ const onCanvasClick = () => {
   if (isFilling) {
     context.beginPath();
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    fixedItemArray.map((item) => drawImage(item));
+    drawOrderedItems();
   }
 };
 
@@ -200,25 +189,21 @@ color.addEventListener('change', onColorChange);
 fileInput.addEventListener('change', onFileChange);
 saveButton.addEventListener('click', onSaveButtonClick);
 
-chinButton.addEventListener('click', onCharacterBtnClick);
-quokkaButton.addEventListener('click', onCharacterBtnClick);
-rabbitButton.addEventListener('click', onCharacterBtnClick);
-bearButton.addEventListener('click', onCharacterBtnClick);
+chinButton.addEventListener('click', changeProfileItems);
+quokkaButton.addEventListener('click', changeProfileItems);
+rabbitButton.addEventListener('click', changeProfileItems);
+bearButton.addEventListener('click', changeProfileItems);
 
-desk1Button.addEventListener('click', fixedItemButtonClick);
-desk2Button.addEventListener('click', fixedItemButtonClick);
-desk3Button.addEventListener('click', fixedItemButtonClick);
+desk1Button.addEventListener('click', changeProfileItems);
+desk2Button.addEventListener('click', changeProfileItems);
+desk3Button.addEventListener('click', changeProfileItems);
 
-laptop1Button.addEventListener(
-  'click',
-  fixedItemButtonClick
-);
-laptop2Button.addEventListener(
-  'click',
-  fixedItemButtonClick
-);
+laptop1Button.addEventListener('click', changeProfileItems);
+laptop2Button.addEventListener('click', changeProfileItems);
 
 fillingWayButton.addEventListener(
   'click',
   onFillingWayBtnClick
 );
+
+window.onload = drawOrderedItems;
