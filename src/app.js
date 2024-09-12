@@ -35,6 +35,7 @@ canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
 
 let fixedItemArray = [];
+let backgroundColor = 'whtie';
 
 let isPainting = false;
 let isFilling = false;
@@ -63,8 +64,11 @@ const onLineWidthChange = (event) => {
 
 const onColorChange = (event) => {
   context.beginPath();
-  context.strokeStyle = event.target.value;
-  context.fillStyle = event.target.value;
+  const pickColor = event.target.value;
+  context.strokeStyle = pickColor;
+  context.fillStyle = pickColor;
+  backgroundColor = pickColor;
+  console.log(backgroundColor);
 };
 
 const onFileChange = (event) => {
@@ -128,9 +132,8 @@ const onCharacterBtnClick = (event) => {
   } else if (isCharacterOnCanvas) {
     // 캐릭터가 이미 캔버스에 있는 경우 - 초기화 후 그려주기
     context.beginPath();
-    context.fillStyle = 'white';
+    context.fillStyle = backgroundColor;
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    console.log(fixedItemArray);
     drawImage(buttonClass);
     fixedItemArray.map((item) => drawImage(item));
     isCharacterOnCanvas = true;
@@ -153,7 +156,6 @@ const fixedItemButtonClick = (event) => {
     fixedItemArray.push(buttonClass);
   }
   context.beginPath();
-  console.log(fixedItemArray);
   fixedItemArray.sort().map((item) => drawImage(item));
 };
 
@@ -171,7 +173,7 @@ const onCanvasClick = () => {
   if (isFilling) {
     context.beginPath();
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    isCharacterOnCanvas = false;
+    fixedItemArray.map((item) => drawImage(item));
   }
 };
 
