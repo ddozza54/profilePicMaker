@@ -34,7 +34,7 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
 
-const fixedItemArray = [];
+let fixedItemArray = [];
 
 let isPainting = false;
 let isFilling = false;
@@ -139,9 +139,22 @@ const onCharacterBtnClick = (event) => {
 
 const fixedItemButtonClick = (event) => {
   let buttonClass = event.target.className;
-  fixedItemArray.push(buttonClass);
+  //같은 카테고리는 삭제해준 후 넣어주기
+  if (buttonClass.includes('desk')) {
+    fixedItemArray = fixedItemArray.filter(
+      (item) => !item.includes('desk')
+    );
+    fixedItemArray.push(buttonClass);
+  }
+  if (buttonClass.includes('laptop')) {
+    fixedItemArray = fixedItemArray.filter(
+      (item) => !item.includes('laptop')
+    );
+    fixedItemArray.push(buttonClass);
+  }
   context.beginPath();
-  drawImage(buttonClass);
+  console.log(fixedItemArray);
+  fixedItemArray.sort().map((item) => drawImage(item));
 };
 
 const onFillingWayBtnClick = () => {
