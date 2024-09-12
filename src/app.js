@@ -34,6 +34,8 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 context.lineWidth = lineWidth.value;
 
+const fixedItemArray = [];
+
 let isPainting = false;
 let isFilling = false;
 let isCharacterOnCanvas = false;
@@ -128,13 +130,16 @@ const onCharacterBtnClick = (event) => {
     context.beginPath();
     context.fillStyle = 'white';
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    console.log(fixedItemArray);
     drawImage(buttonClass);
+    fixedItemArray.map((item) => drawImage(item));
     isCharacterOnCanvas = true;
   }
 };
 
 const fixedItemButtonClick = (event) => {
   let buttonClass = event.target.className;
+  fixedItemArray.push(buttonClass);
   context.beginPath();
   drawImage(buttonClass);
 };
