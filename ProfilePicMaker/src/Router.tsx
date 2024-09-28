@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
 import App from './App';
-import Canvas from './pages/Canvas';
+import Canvas from './pages/MakingProfilePic';
 import Gallery from './pages/Gallery';
 
 
