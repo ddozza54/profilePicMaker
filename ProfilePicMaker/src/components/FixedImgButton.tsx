@@ -1,10 +1,14 @@
+import { Canvas } from 'fabric';
+
 interface ImgButton {
     imgsrc: string;
 }
 
 export default function FixedImgButton({ imgsrc }: ImgButton) {
     const onAddToCanvas = () => {
-        console.log('click')
+const image = new Image();
+image.src = imgsrc;
+
     }
 
     return (
