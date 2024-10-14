@@ -1,12 +1,13 @@
-import { Outlet } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import './App.css'
+import router from './Router'
 
 function App() {
-
   return (
-    <>
-      <Outlet />
-    </>
+    <div>
+      APP
+      <RouterProvider router={router} />
+    </div>
   )
 }
 
