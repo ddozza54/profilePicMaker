@@ -1,29 +1,34 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
-import App from './App';
-import Canvas from './pages/Canvas';
 import Gallery from './pages/Gallery';
+import FabricPage from './pages/FabricPage';
+import Onboarding from './pages/Onboarding';
+import Layout from './components/Layout';
+import MakingProfilePic from './pages/MakingProfilePic';
 
 
 const router = createBrowserRouter([
     {
         path: '',
-        element: <App />,
+        element: <Onboarding />,
+    },
+    {
+        path: 'page',
+        element: <Layout />,
         errorElement: <ErrorPage />,
         children: [
             {
-                path: '',
-                element: <Home />
-            },
-            {
                 path: 'canvas',
-                element: <Canvas />
+                element: <MakingProfilePic />
             },
             {
                 path: 'gallery',
                 element: <Gallery />
             },
+            {
+                path: 'fabric',
+                element: <FabricPage />
+            }
         ]
     },
 
