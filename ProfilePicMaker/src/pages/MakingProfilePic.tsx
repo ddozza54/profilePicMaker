@@ -1,4 +1,5 @@
 import ImgButtonCategory from '../components/ImgButtonCategory';
+import ToolBarButton from '../components/ToolBarButton';
 import {
   BEAR_IMG_SRC,
   CHINCHILLA_IMG_SRC,
@@ -35,6 +36,12 @@ const Canvas = styled.canvas`
   height: ${CANVAS_HEIGHT};
 `;
 
+const ToolBar = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+
 const Buttons = styled.div`
   width: 100%;
   height: 100%;
@@ -45,6 +52,7 @@ export default function MakingProfilePic() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [context, setContext] = useState<CanvasRenderingContext2D>();
+  const [btnCategory, setBtncategory] = useState('character');
 
   const onClickImgBtn = (imgSrc: string) => {
     const canvas = canvasRef.current;
@@ -58,11 +66,23 @@ export default function MakingProfilePic() {
   return (
     <Wrapper>
       <Canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+      <ToolBar>
+        <ToolBarButton name="Character" category="character" setcategoryFn={setBtncategory} />
+        <ToolBarButton name="Desk" category="desk" setcategoryFn={setBtncategory} />
+        <ToolBarButton name="Laptop" category="laptop" setcategoryFn={setBtncategory} />
+        <ToolBarButton name="Drink" category="drink" setcategoryFn={setBtncategory} />
+      </ToolBar>
       <Buttons>
-        <ImgButtonCategory name="Characters" clickFn={onClickImgBtn} imgPaths={[QUOKKA_IMG_SRC, CHINCHILLA_IMG_SRC, BEAR_IMG_SRC, RABBIT_IMG_SRC]} />
-        <ImgButtonCategory name="Desks" clickFn={onClickImgBtn} imgPaths={[DESK1_IMG_SRC, DESK2_IMG_SRC, DESK3_IMG_SRC]} />
-        <ImgButtonCategory name="Laptops" clickFn={onClickImgBtn} imgPaths={[LAPTOP1_IMG_SRC, LAPTOP2_IMG_SRC]} />
-        <ImgButtonCategory name="Drinks" clickFn={onClickImgBtn} imgPaths={[DRINK1_IMG_SRC, DRINK2_IMG_SRC]} />
+        {btnCategory == 'character' && (
+          <ImgButtonCategory
+            name="Characters"
+            clickFn={onClickImgBtn}
+            imgPaths={[QUOKKA_IMG_SRC, CHINCHILLA_IMG_SRC, BEAR_IMG_SRC, RABBIT_IMG_SRC]}
+          />
+        )}
+        {btnCategory == 'desk' && <ImgButtonCategory name="Desk" clickFn={onClickImgBtn} imgPaths={[DESK1_IMG_SRC, DESK2_IMG_SRC, DESK3_IMG_SRC]} />}
+        {btnCategory == 'laptop' && <ImgButtonCategory name="Laptop" clickFn={onClickImgBtn} imgPaths={[LAPTOP1_IMG_SRC, LAPTOP2_IMG_SRC]} />}
+        {btnCategory == 'drink' && <ImgButtonCategory name="Drinks" clickFn={onClickImgBtn} imgPaths={[DRINK1_IMG_SRC, DRINK2_IMG_SRC]} />}
       </Buttons>
     </Wrapper>
   );

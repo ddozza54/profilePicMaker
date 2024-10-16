@@ -8,12 +8,12 @@ const GlobalStyles = createGlobalStyle`
   ${reset};
   *{
     box-sizing: border-box;
+    font-family: "Poor Story", system-ui;
   }
   body{
     background-color:#ddfcac ;
     display: flex;
     justify-content: center;
-    font-family: "Poor Story", system-ui;
     color: #484a4b;
   }
 `;

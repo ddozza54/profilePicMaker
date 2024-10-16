@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface ImgButton {
-    imgsrc: string;
-    onClick: (src: string) => void;
+  imgsrc: string;
+  onClick: (src: string) => void;
 }
 
 const ImgButton = styled.button`
@@ -14,10 +14,10 @@ const ImgButton = styled.button`
   font-family: inherit;
   background-color: #f8f7f7;
   cursor: pointer;
-  &:hover{
-    border: #72BF78 1px solid;
+  &:hover {
+    border: #72bf78 1px solid;
   }
-  img{
+  img {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,12 +26,10 @@ const ImgButton = styled.button`
   }
 `;
 
-export default function FixedImgButton({ imgsrc, onClick }: ImgButton) {
-
-    return (
-        <ImgButton onClick={() => onClick(imgsrc)}>
-            <img src={imgsrc} />
-        </ImgButton>
-    );
+export default function DrawingImgButton({ imgsrc, onClick }: ImgButton) {
+  return (
+    <ImgButton onClick={() => onClick(imgsrc)}>
+      <img src={imgsrc} />
+    </ImgButton>
+  );
 }
-
