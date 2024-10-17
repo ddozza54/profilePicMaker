@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 interface ImgButton {
   imgsrc: string;
-  onClick: (src: string) => void;
+  category: string;
+  onClick: (src: string, category: string) => void;
 }
 
 const ImgButton = styled.button`
@@ -26,9 +27,9 @@ const ImgButton = styled.button`
   }
 `;
 
-export default function DrawingImgButton({ imgsrc, onClick }: ImgButton) {
+export default function DrawingImgButton({ imgsrc, category, onClick }: ImgButton) {
   return (
-    <ImgButton onClick={() => onClick(imgsrc)}>
+    <ImgButton onClick={() => onClick(imgsrc, category)}>
       <img src={imgsrc} />
     </ImgButton>
   );
