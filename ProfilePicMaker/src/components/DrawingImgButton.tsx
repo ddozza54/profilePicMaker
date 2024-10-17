@@ -1,9 +1,9 @@
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { clickedImgButtonSrcAtom } from '../atoms';
 
 interface ImgButton {
   imgsrc: string;
-  category: string;
-  onClick: (src: string, category: string) => void;
 }
 
 const ImgButton = styled.button`
@@ -27,9 +27,11 @@ const ImgButton = styled.button`
   }
 `;
 
-export default function DrawingImgButton({ imgsrc, category, onClick }: ImgButton) {
+export default function DrawingImgButton({ imgsrc }: ImgButton) {
+  const setclickedImgButtonSrc = useSetRecoilState(clickedImgButtonSrcAtom);
+
   return (
-    <ImgButton onClick={() => onClick(imgsrc, category)}>
+    <ImgButton onClick={() => setclickedImgButtonSrc(imgsrc)}>
       <img src={imgsrc} />
     </ImgButton>
   );

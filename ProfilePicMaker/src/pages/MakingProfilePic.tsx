@@ -1,5 +1,4 @@
-import { atom, useRecoilState, useSetRecoilState } from 'recoil';
-import ImgButtonCategory from '../components/ImgButtonCategory';
+import { useRecoilValue } from 'recoil';
 import ToolBarButton from '../components/ToolBarButton';
 import {
   BEAR_IMG_SRC,
@@ -14,9 +13,10 @@ import {
   QUOKKA_IMG_SRC,
   RABBIT_IMG_SRC,
 } from '../constant/imgPaths';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { buttonCategoryAtom, categoryAtom } from '../atoms';
+import { clickedImgButtonSrcAtom, toolBarCategoryAtom } from '../atoms';
+import ImgButtons from '../components/ImgButtonCategory';
 
 interface ImgBtnClick {
   imgSrc: string;
@@ -59,22 +59,18 @@ export default function MakingProfilePic() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [context, setContext] = useState<CanvasRenderingContext2D>();
-  const [category, setCategory] = useRecoilState(categoryAtom);
-  const [profileItems, setProfileItems] = useState({
-    character: 'character_quokka_button',
-    desk: 'desk3_button',
-    laptop: 'laptop1_button',
-  });
+  const toolBarCategory = useRecoilValue(toolBarCategoryAtom);
+  const clickedImgButtonSrc = useRecoilValue(clickedImgButtonSrcAtom);
 
-  const onClickImgBtn = ({ imgSrc, category }: ImgBtnClick) => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
-
     const image = new Image();
-    image.src = imgSrc;
+    image.src = clickedImgButtonSrc;
     ctx?.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx && setContext(ctx);
-  };
+  }, [clickedImgButtonSrc]);
+
   return (
     <Wrapper>
       <Canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
@@ -85,16 +81,10 @@ export default function MakingProfilePic() {
         <ToolBarButton name="Drink" category="drink" />
       </ToolBar>
       <Buttons>
-        {category == 'character' && (
-          <ImgButtonCategory
-            name="Characters"
-            clickFn={onClickImgBtn}
-            imgPaths={[QUOKKA_IMG_SRC, CHINCHILLA_IMG_SRC, BEAR_IMG_SRC, RABBIT_IMG_SRC]}
-          />
-        )}
-        {category == 'desk' && <ImgButtonCategory name="Desk" clickFn={onClickImgBtn} imgPaths={[DESK1_IMG_SRC, DESK2_IMG_SRC, DESK3_IMG_SRC]} />}
-        {category == 'laptop' && <ImgButtonCategory name="Laptop" clickFn={onClickImgBtn} imgPaths={[LAPTOP1_IMG_SRC, LAPTOP2_IMG_SRC]} />}
-        {category == 'drink' && <ImgButtonCategory name="Drinks" clickFn={onClickImgBtn} imgPaths={[DRINK1_IMG_SRC, DRINK2_IMG_SRC]} />}
+        {toolBarCategory == 'character' && <ImgButtons imgPaths={[QUOKKA_IMG_SRC, CHINCHILLA_IMG_SRC, BEAR_IMG_SRC, RABBIT_IMG_SRC]} />}
+        {toolBarCategory == 'desk' && <ImgButtons imgPaths={[DESK1_IMG_SRC, DESK2_IMG_SRC, DESK3_IMG_SRC]} />}
+        {toolBarCategory == 'laptop' && <ImgButtons imgPaths={[LAPTOP1_IMG_SRC, LAPTOP2_IMG_SRC]} />}
+        {toolBarCategory == 'drink' && <ImgButtons imgPaths={[DRINK1_IMG_SRC, DRINK2_IMG_SRC]} />}
       </Buttons>
     </Wrapper>
   );

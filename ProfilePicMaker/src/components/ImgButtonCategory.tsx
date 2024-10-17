@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import DrawingImgButton from './DrawingImgButton';
 
 interface ImgButtonCategory {
-  name: string;
   imgPaths: string[];
-  clickFn: (imgPaths: string, category: string) => void;
 }
 
 const Wrapper = styled.div`
@@ -22,12 +20,12 @@ const Buttons = styled.div`
   align-items: center;
 `;
 
-export default function ImgButtonCategory({ name, clickFn, imgPaths }: ImgButtonCategory) {
+export default function ImgButtons({ imgPaths }: ImgButtonCategory) {
   return (
     <Wrapper>
       <Buttons>
         {imgPaths.map((path, i) => (
-          <DrawingImgButton onClick={() => clickFn(path, name.toLowerCase())} key={i} imgsrc={path} category={name.toLowerCase()} />
+          <DrawingImgButton key={i} imgsrc={path} />
         ))}
       </Buttons>
     </Wrapper>
