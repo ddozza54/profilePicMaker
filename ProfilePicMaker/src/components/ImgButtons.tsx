@@ -3,6 +3,7 @@ import DrawingImgButton from './DrawingImgButton';
 
 interface ImgButtonCategory {
   imgPaths: string[];
+  category: string;
 }
 
 const Wrapper = styled.div`
@@ -20,12 +21,12 @@ const Buttons = styled.div`
   align-items: center;
 `;
 
-export default function ImgButtons({ imgPaths }: ImgButtonCategory) {
+export default function ImgButtons({ imgPaths, category }: ImgButtonCategory) {
   return (
     <Wrapper>
       <Buttons>
         {imgPaths.map((path, i) => (
-          <DrawingImgButton key={i} imgsrc={path} />
+          <DrawingImgButton key={i} imgsrc={path} category={category} />
         ))}
       </Buttons>
     </Wrapper>

@@ -1,9 +1,10 @@
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { clickedImgButtonSrcAtom } from '../atoms';
+import { profileItemsAtom } from '../atoms';
 
 interface ImgButton {
   imgsrc: string;
+  category: string;
 }
 
 const ImgButton = styled.button`
@@ -27,11 +28,15 @@ const ImgButton = styled.button`
   }
 `;
 
-export default function DrawingImgButton({ imgsrc }: ImgButton) {
-  const setclickedImgButtonSrc = useSetRecoilState(clickedImgButtonSrcAtom);
+export default function DrawingImgButton({ imgsrc, category }: ImgButton) {
+  const [profileItems, setProfileItems] = useRecoilState(profileItemsAtom);
 
+  const onClick = () => {
+    setProfileItems({ ...profileItems, [category]: imgsrc });
+    console.log('click!');
+  };
   return (
-    <ImgButton onClick={() => setclickedImgButtonSrc(imgsrc)}>
+    <ImgButton onClick={onClick}>
       <img src={imgsrc} />
     </ImgButton>
   );
