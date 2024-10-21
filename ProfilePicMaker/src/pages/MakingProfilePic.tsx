@@ -33,7 +33,6 @@ export default function MakingProfilePic() {
     ctx?.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     Object.values(profileItems).map((itmes) => drawingImgs({ ctx, itmes }));
     ctx && setContext(ctx);
-    console.log('profileItme 바뀜', profileItems);
   }, [profileItems]);
 
   return (
@@ -41,11 +40,13 @@ export default function MakingProfilePic() {
       <S.Canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
       <S.ToolBar>
         {imgBtnCategory.map((obj) => (
-          <ToolBarButton name={obj.name} category={obj.category} />
+          <ToolBarButton key={obj.name} name={obj.name} category={obj.category} />
         ))}
       </S.ToolBar>
       <S.ButtonsBox>
-        {imgBtnCategory.map((obj) => toolBarCategory == obj.category && <ImgButtonArray category={obj.category} imgPaths={obj.imgPaths} />)}
+        {imgBtnCategory.map(
+          (obj) => toolBarCategory == obj.category && <ImgButtonArray key={obj.category} category={obj.category} imgPaths={obj.imgPaths} />,
+        )}
       </S.ButtonsBox>
     </S.Wrapper>
   );

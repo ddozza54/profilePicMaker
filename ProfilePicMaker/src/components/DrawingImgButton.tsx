@@ -12,7 +12,6 @@ export default function DrawingImgButton({ imgsrc, category }: ImgButton) {
 
   const onClick = () => {
     setProfileItems({ ...profileItems, [category]: imgsrc });
-    console.log('click!');
   };
   return (
     <ImgButton onClick={onClick}>
