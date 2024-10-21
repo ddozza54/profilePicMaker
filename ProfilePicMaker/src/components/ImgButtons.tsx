@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { ImgButtonArrayBox } from '../styles/CanvasPage.styled';
 import DrawingImgButton from './DrawingImgButton';
 
 interface ImgButtonCategory {
@@ -6,29 +6,12 @@ interface ImgButtonCategory {
   category: string;
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 10px;
-  border-bottom: 1px lightgray solid;
-`;
-
-const Buttons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export default function ImgButtons({ imgPaths, category }: ImgButtonCategory) {
+export default function ImgButtonArray({ imgPaths, category }: ImgButtonCategory) {
   return (
-    <Wrapper>
-      <Buttons>
-        {imgPaths.map((path, i) => (
-          <DrawingImgButton key={i} imgsrc={path} category={category} />
-        ))}
-      </Buttons>
-    </Wrapper>
+    <ImgButtonArrayBox>
+      {imgPaths.map((path, i) => (
+        <DrawingImgButton key={i} imgsrc={path} category={category} />
+      ))}
+    </ImgButtonArrayBox>
   );
 }
