@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
-import * as Paths from '../constant/imgPaths';
 import * as S from '../styles/CanvasPage.styled';
 import { useEffect, useRef, useState } from 'react';
 import { profileItemsAtom, toolBarCategoryAtom } from '../atoms';
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../constant/constants';
 import ToolBarButton from '../components/ToolBarButton';
 import ImgButtonArray from '../components/ImgButtons';
+import { imgBtnCategory } from '../ImgCategory';
 
 interface drawingImgs {
   ctx: CanvasRenderingContext2D | null | undefined;
@@ -40,23 +40,12 @@ export default function MakingProfilePic() {
     <S.Wrapper>
       <S.Canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
       <S.ToolBar>
-        <ToolBarButton name="Character" category="character" />
-        <ToolBarButton name="Desk" category="desk" />
-        <ToolBarButton name="Laptop" category="laptop" />
-        <ToolBarButton name="Drink" category="drink" />
+        {imgBtnCategory.map((obj) => (
+          <ToolBarButton name={obj.name} category={obj.category} />
+        ))}
       </S.ToolBar>
       <S.ButtonsBox>
-        {toolBarCategory == 'character' && (
-          <ImgButtonArray
-            category={toolBarCategory}
-            imgPaths={[Paths.QUOKKA_IMG_SRC, Paths.CHINCHILLA_IMG_SRC, Paths.BEAR_IMG_SRC, Paths.RABBIT_IMG_SRC]}
-          />
-        )}
-        {toolBarCategory == 'desk' && (
-          <ImgButtonArray category={toolBarCategory} imgPaths={[Paths.DESK1_IMG_SRC, Paths.DESK2_IMG_SRC, Paths.DESK3_IMG_SRC]} />
-        )}
-        {toolBarCategory == 'laptop' && <ImgButtonArray category={toolBarCategory} imgPaths={[Paths.LAPTOP1_IMG_SRC, Paths.LAPTOP2_IMG_SRC]} />}
-        {toolBarCategory == 'drink' && <ImgButtonArray category={toolBarCategory} imgPaths={[Paths.DRINK1_IMG_SRC, Paths.DRINK2_IMG_SRC]} />}
+        {imgBtnCategory.map((obj) => toolBarCategory == obj.category && <ImgButtonArray category={obj.category} imgPaths={obj.imgPaths} />)}
       </S.ButtonsBox>
     </S.Wrapper>
   );
